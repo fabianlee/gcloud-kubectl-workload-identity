@@ -85,7 +85,9 @@ Container running as KSA 'my-ksa-annotated' that has permissions to pods and dae
 
 Can run kubectl commands, but not gcloud commands.
 
-The fact that the KSA is annotated with the GSA means that 'gcloud auth list' shows the GSA gcloud-user${project_id}.iam.gserviceaccount.com, but cannot assume its identity.
+On clusters with workload identity enabled, the fact that the KSA is annotated with the GSA means that 'gcloud auth list' shows the GSA gcloud-user${project_id}.iam.gserviceaccount.com, but cannot assume its identity.
+
+On clusters without workload identity, container runs as default and gcloud also fails.
 
 ### jsonsecret-test
 
@@ -102,6 +104,8 @@ Can run kubectl commands with RBAC role permissions provided by 'my-wi-ksa'.
 Can run gcloud commands as 'gcloud-user@${project_id}.iam.gserviceaccount.com' GSA because of workload identity:
 * 'iam.gke.io/gcp-service-account' annotation on KSA points to GSA 'gcloud-user'
 * KSA to GSA binding command - gcloud iam service-accounts add-iam-policy-binding <GSA> -role roles/iam.workloadIdentityUser --member serviceAccount:${project_id}.svc.id.goog[<namespace>/my-wi-ksa]
+
+On clusters without workload identity, container runs as default and gcloud fails.
 
 ## KSA RBAC Roles
 
