@@ -103,4 +103,11 @@ Can run gcloud commands as 'gcloud-user@${project_id}.iam.gserviceaccount.com' G
 * 'iam.gke.io/gcp-service-account' annotation on KSA points to GSA 'gcloud-user'
 * KSA to GSA binding command - gcloud iam service-accounts add-iam-policy-binding <GSA> -role roles/iam.workloadIdentityUser --member serviceAccount:${project_id}.svc.id.goog[<namespace>/my-wi-ksa]
 
+## KSA RBAC Roles
+
+KSA | Used in | pods | deployments | daemonsets | replicasets
+---|---|---|---|---|---
+my-ksa | kubectl-with-simple-ksa | yes | yes | no | yes
+my-ksa-annotated | kubectl-with-annotated-ksa | yes | yes | yes | no
+my-wi-ksa | workload-identity | yes | no | yes | yes
 

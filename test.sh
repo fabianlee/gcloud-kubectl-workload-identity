@@ -15,6 +15,11 @@ kubectl exec -it deployment/$dep -n $ns -- kubectl get pods -A 2>/dev/null
 res_pods=$?
 
 echo ""
+echo "--LIST DEPLOYMENTS--"
+kubectl exec -it deployment/$dep -n $ns -- kubectl get deployments -A 2>/dev/null
+res_deployments=$?
+
+echo ""
 echo "--LIST DAEMONSETS--"
 kubectl exec -it deployment/$dep -n $ns -- kubectl get daemonset -A 2>/dev/null
 res_ds=$?
@@ -43,6 +48,7 @@ echo "SUMMARY"
 echo "-----------------"
 echo "GCP metadata     $(resolve_code $res_metadata)"
 echo "kubectl pods     $(resolve_code $res_pods)"
+echo "kubectl dep      $(resolve_code $res_deployments)"
 echo "kubectl ds       $(resolve_code $res_ds)"
 echo "kubectl rs       $(resolve_code $res_rs)"
 echo "gcloud clusters  $(resolve_code $res_gcloud)"
