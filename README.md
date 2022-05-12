@@ -77,13 +77,13 @@ Will not be able to run kubectl nor gcloud commands.
 
 Container running as simple KSA 'my-ksa' that has permissions to pods and replicasets, but not daemonsets. 
 
-Can run kubectl commands, but no gcloud commands.
+Can run kubectl commands, but not gcloud commands.
 
 ### annotatedksa-test
 
 Container running as KSA 'my-ksa-annotated' that has permissions to pods and daemonsetes, but not replicasets.  
 
-Can run kubectl commands, but no gcloud commands.
+Can run kubectl commands, but not gcloud commands.
 
 The fact that the KSA is annotated with the GSA means that 'gcloud auth list' shows the GSA gcloud-user${project_id}.iam.gserviceaccount.com, but cannot assume its identity.
 
