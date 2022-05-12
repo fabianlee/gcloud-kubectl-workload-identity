@@ -2,6 +2,8 @@
 
 This project is for testing access to kubectl and gcloud from within a K8S GKE container.  The [google-cloud-cli image](https://console.cloud.google.com/gcr/images/google.com:cloudsdktool/GLOBAL/google-cloud-cli) will provide us access to the kubectl+gcloud binary, but you still need to provide credentials.
 
+GKE [Workload Identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity) is the preferred method for impersonation of identity for access to Google Cloud services.
+
 We will test the following scenarios:
 
 Test | description
