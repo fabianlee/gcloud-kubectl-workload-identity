@@ -93,7 +93,7 @@ Container run as default service account.
 
 Will not be able to run kubectl commands, but can run gcloud commands because of mounted GSA secret, pointed to by environment variable CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE.
 
-### workloadid-tet
+### workloadid-test
 
 Container running as KSA 'my-wi-ksa', that has permission to daemonsets and replicasets, but not deployments.
 
