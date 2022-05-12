@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment #Pod
+metadata:
+  name: kubectl-ksa-annotated-test
+  namespace: default
+  annotations:
+    # disable sidecar
+    sidecar.istio.io/inject: "false"
+    # disable egress traffic capture, allow access to google metadata server
+    traffic.sidecar.istio.io/excludeOutboundIPRanges: "169.254.169.254/32"
+spec:
+  selector:
+    matchLabels:
+      app: kubectl-ksa-annotated-test
+  template:
+    metadata:
+      labels:
+        app: kubectl-ksa-annotated-test
+    spec:
+      # specifies the KSA created earlier
+      serviceAccountName: my-ksa-annotated
+      containers:
+      - name: kubectl-ksa-annotated-test
+        # https://console.cloud.google.com/gcr/images/google.com:cloudsdktool/GLOBAL/google-cloud-cli
+        image: gcr.io/google.com/cloudsdktool/google-cloud-cli:384.0.1
+        command: ["sleep","infinity"]

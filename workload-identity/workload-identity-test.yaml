@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: Deployment #Pod
+metadata:
+  name: workload-identity-test
+  namespace: default
+  annotations:
+    # disable sidecar
+    sidecar.istio.io/inject: "false"
+    # disable egress traffic capture, allow access to google metadata server
+    traffic.sidecar.istio.io/excludeOutboundIPRanges: "169.254.169.254/32"
+spec:
+  selector:
+    matchLabels:
+      app: workload-identity-test
+  template:
+    metadata:
+      labels:
+        app: workload-identity-test
+    spec:
+      serviceAccountName: my-wi-ksa
+      containers:
+      - name: workload-identity-test
+        # https://console.cloud.google.com/gcr/images/google.com:cloudsdktool/GLOBAL/google-cloud-cli
+        image: gcr.io/google.com/cloudsdktool/google-cloud-cli:384.0.1
+        command: ["sleep","infinity"]
+        #env:
+        #- name: CLOUDSDK_CORE_PROJECT
+        #  value: <gcp_project_id>
+        #- name: CLOUDSDK_CORE_ACCOUNT
+        #  value: <email_id>
+        #- name: CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE
+        #  value: /var/secrets/google/key.json
+        #- name: CLOUDSDK_CONFIG=
+        #  value: /
+        #- name: CLOUDSDK_PROXY_TYPE
+        #  value: http
+        #- name: CLOUDSDK_PROXY_PORT
+        #  value: '3128'
+        #- name: CLOUDSDK_PROXY_ADDRESS
+        #  value: <web_proxy>

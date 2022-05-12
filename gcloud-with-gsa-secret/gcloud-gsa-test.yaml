@@ -1,0 +1,54 @@
+---
+apiVersion: apps/v1
+kind: Deployment #Pod
+metadata:
+  name: gcloud-gsa-test
+  #namespace: default
+  annotations:
+    # disable sidecar
+    sidecar.istio.io/inject: "false"
+    # disable egress traffic capture, allow access to google metadata server
+    traffic.sidecar.istio.io/excludeOutboundIPRanges: "169.254.169.254/32"
+spec:
+  selector:
+    matchLabels:
+      app: gcloud-gsa-test
+  template:
+    metadata:
+      labels:
+        app: gcloud-gsa-test
+    spec:
+      #serviceAccountName: my-ksa
+      volumes:
+      - name: google-cloud-key
+        secret:
+          secretName: gke-key # this secret must already be loaded
+      containers:
+      - name: gcloud-gsa-test
+        # https://console.cloud.google.com/gcr/images/google.com:cloudsdktool/GLOBAL/google-cloud-cli
+        image: gcr.io/google.com/cloudsdktool/google-cloud-cli:384.0.1
+        command: ["sleep","infinity"]
+        volumeMounts:
+        - name: google-cloud-key
+          mountPath: /var/secrets/google
+        env:
+        - name: CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE
+          value: /var/secrets/google/key.json
+
+        #- name: CLOUDSDK_CORE_PROJECT
+        #  value: <gcp_project_id>
+        #- name: CLOUDSDK_CORE_ACCOUNT
+        #  value: <full_email_acct_id>
+
+        # IF web proxy required to reach google apis
+        #- name: CLOUDSDK_PROXY_TYPE
+        #  value: http
+        #- name: CLOUDSDK_PROXY_PORT
+        #  value: '3128'
+        #- name: CLOUDSDK_PROXY_ADDRESS
+        #  value: myproxy
+        # if we had opted to mount a gcloud config file instead of specifying with env vars
+        #- name: CLOUDSDK_CONFIG=
+        #  value: /
+
+
