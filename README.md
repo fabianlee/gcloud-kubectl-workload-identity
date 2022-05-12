@@ -107,7 +107,7 @@ Can run gcloud commands as 'gcloud-user@${project_id}.iam.gserviceaccount.com' G
 
 KSA | Used in | pods | deployments | daemonsets | replicasets
 ---|---|---|---|---|---
-my-ksa | kubectl-with-simple-ksa | yes | yes | no | yes
-my-ksa-annotated | kubectl-with-annotated-ksa | yes | yes | yes | no
-my-wi-ksa | workload-identity | yes | no | yes | yes
+[my-ksa](https://github.com/fabianlee/gcloud-kubectl-workload-identity/blob/main/kubectl-with-simple-ksa/my-ksa.yaml) | kubectl-with-simple-ksa | yes | yes | no | yes
+[my-ksa-annotated](https://github.com/fabianlee/gcloud-kubectl-workload-identity/blob/main/kubectl-with-annotated-ksa/my-ksa-annotated.yaml) | kubectl-with-annotated-ksa | yes | yes | yes | no
+[my-wi-ksa](https://github.com/fabianlee/gcloud-kubectl-workload-identity/blob/main/workload-identity/my-wi-ksa.yaml) | workload-identity | yes | no | yes | yes
 
