@@ -67,6 +67,18 @@ teardown         remove deployments, KSA, and KSA/GSA binding
 Which action (q to quit) ? 
 ```
 
+
+## KSA RBAC Roles
+
+Each of the KSA used have slightly different RBAC permissions so that you can confirm the difference between their access levels.
+
+KSA | Used in | pods | deployments | daemonsets | replicasets
+---|---|---|---|---|---
+[my-ksa](https://github.com/fabianlee/gcloud-kubectl-workload-identity/blob/main/kubectl-with-simple-ksa/my-ksa.yaml) | kubectl-with-simple-ksa | yes | yes | no | yes
+[my-ksa-annotated](https://github.com/fabianlee/gcloud-kubectl-workload-identity/blob/main/kubectl-with-annotated-ksa/my-ksa-annotated.yaml) | kubectl-with-annotated-ksa | yes | yes | yes | no
+[my-wi-ksa](https://github.com/fabianlee/gcloud-kubectl-workload-identity/blob/main/workload-identity/my-wi-ksa.yaml) | workload-identity | yes | no | yes | yes
+
+
 ## Expected test results
 
 ### generic-test
@@ -109,12 +121,4 @@ Can run gcloud commands as 'gcloud-user@${project_id}.iam.gserviceaccount.com' G
 * deployment [spec.serviceAccount](https://github.com/fabianlee/gcloud-kubectl-workload-identity/blob/main/workload-identity/workload-identity-test.yaml#L21) set to KSA 'my-wi-ksa'
 
 On clusters without workload identity, container runs as default and gcloud fails.
-
-## KSA RBAC Roles
-
-KSA | Used in | pods | deployments | daemonsets | replicasets
----|---|---|---|---|---
-[my-ksa](https://github.com/fabianlee/gcloud-kubectl-workload-identity/blob/main/kubectl-with-simple-ksa/my-ksa.yaml) | kubectl-with-simple-ksa | yes | yes | no | yes
-[my-ksa-annotated](https://github.com/fabianlee/gcloud-kubectl-workload-identity/blob/main/kubectl-with-annotated-ksa/my-ksa-annotated.yaml) | kubectl-with-annotated-ksa | yes | yes | yes | no
-[my-wi-ksa](https://github.com/fabianlee/gcloud-kubectl-workload-identity/blob/main/workload-identity/my-wi-ksa.yaml) | workload-identity | yes | no | yes | yes
 

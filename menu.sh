@@ -49,7 +49,7 @@ function showMenu() {
     menu_id=$(echo $menu_item | cut -d, -f1)
     # eval done so that embedded variables get evaluated (e.g. MYKUBECONFIG)
     label=$(eval echo $menu_item | cut -d, -f2-)
-    printf "%-16s %-60s %-12s\n" "$menu_id" "$label" "${done_status[$menu_id]}"
+    printf "%-18s %-60s %-10s\n" "$menu_id" "$label" "${done_status[$menu_id]}"
 
   done
   echo ""
