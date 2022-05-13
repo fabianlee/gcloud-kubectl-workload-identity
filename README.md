@@ -120,5 +120,5 @@ Can run gcloud commands as 'gcloud-user@${project_id}.iam.gserviceaccount.com' G
 * [KSA to GSA binding](https://github.com/fabianlee/gcloud-kubectl-workload-identity/blob/main/workload-identity/make-ksa-impersonate-gsa.sh) command - gcloud iam service-accounts add-iam-policy-binding <GSA> -role roles/iam.workloadIdentityUser --member serviceAccount:${project_id}.svc.id.goog[<namespace>/my-wi-ksa]
 * deployment [spec.serviceAccount](https://github.com/fabianlee/gcloud-kubectl-workload-identity/blob/main/workload-identity/workload-identity-test.yaml#L21) set to KSA 'my-wi-ksa'
 
-On clusters without workload identity, container runs as default and gcloud fails.
+On clusters without workload identity, container runs as default service acct and gcloud fails.
 
