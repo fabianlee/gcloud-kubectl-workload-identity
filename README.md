@@ -101,7 +101,7 @@ Can run kubectl commands, but not gcloud commands.
 
 On clusters with workload identity enabled, the fact that the KSA is annotated with the GSA means that 'gcloud auth list' shows the GSA gcloud-user${project_id}.iam.gserviceaccount.com, but cannot assume its identity.
 
-On clusters without workload identity, container runs as default and gcloud also fails.
+On clusters without workload identity enabled (or node pool does not have workloadMetadataConfig), container runs as default service account and gcloud fails.
 
 ### jsonsecret-test
 
@@ -120,5 +120,21 @@ Can run gcloud commands as 'gcloud-user@${project_id}.iam.gserviceaccount.com' G
 * [KSA to GSA binding](https://github.com/fabianlee/gcloud-kubectl-workload-identity/blob/main/workload-identity/make-ksa-impersonate-gsa.sh) command - gcloud iam service-accounts add-iam-policy-binding <GSA> -role roles/iam.workloadIdentityUser --member serviceAccount:${project_id}.svc.id.goog[<namespace>/my-wi-ksa]
 * deployment [spec.serviceAccount](https://github.com/fabianlee/gcloud-kubectl-workload-identity/blob/main/workload-identity/workload-identity-test.yaml#L21) set to KSA 'my-wi-ksa'
 
-On clusters without workload identity, container runs as default service acct and gcloud fails.
+On clusters without workload identity (or node pool does not have workloadMetadataConfig), container runs as default service acct and gcloud fails.
+ 
+ ## Updating Workload Identity on GKE cluster and node pool
+ 
+ ```
+# update GKE cluster to use workload identity
+# takes 20+ minutes 
+gcloud container clusters update <cluster_name> --zone|region <zone|region> --workload-pool=<gcp_project_id>.svc.id.goog
+ 
+# making nodepool more parallelized for upgrades will speed up rebuild
+gcloud container node-pools list
+gcloud container node-pools update <nodepool_name> --cluster <cluster_name> --max-surge-upgrade=3 --max-unavailable-upgrade=3 --zone|region <zone|region>
+
+# node pool must be rebuilt, takes 5+ minutes for each worker node
+gcloud container node-pools update <nodepool_name> --cluster=<cluster_name> --zone|region <zone|region> --workload-metadata=GKE_METADATA
+```
+ 
 
