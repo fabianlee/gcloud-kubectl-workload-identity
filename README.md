@@ -117,7 +117,7 @@ Can run kubectl commands with RBAC role permissions provided by 'my-wi-ksa'.
 
 Can run gcloud commands as 'gcloud-user@${project_id}.iam.gserviceaccount.com' GSA because of [workload identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity):
 * [iam.gke.io/gcp-service-account](https://github.com/fabianlee/gcloud-kubectl-workload-identity/blob/main/workload-identity/my-wi-ksa.yaml#L36)  annotation on KSA points to GSA 'gcloud-user'
-* [KSA to GSA binding](https://github.com/fabianlee/gcloud-kubectl-workload-identity/blob/main/workload-identity/make-ksa-impersonate-gsa.sh) command - gcloud iam service-accounts add-iam-policy-binding <GSA> -role roles/iam.workloadIdentityUser --member serviceAccount:${project_id}.svc.id.goog[<namespace>/my-wi-ksa]
+* [KSA to GSA binding](https://github.com/fabianlee/gcloud-kubectl-workload-identity/blob/main/workload-identity/make-ksa-impersonate-gsa.sh) command - gcloud iam service-accounts add-iam-policy-binding <GSA> -role roles/iam.workloadIdentityUser --member serviceAccount:${project_id}.svc.id.goog[${namespace}/my-wi-ksa]
 * deployment [spec.serviceAccount](https://github.com/fabianlee/gcloud-kubectl-workload-identity/blob/main/workload-identity/workload-identity-test.yaml#L21) set to KSA 'my-wi-ksa'
 
 On clusters without workload identity (or node pool does not have workloadMetadataConfig), container runs as default service acct and gcloud fails.
